@@ -22,6 +22,11 @@ const App = () => {
     setBlogPosts(newPosts)
   }
 
+  function deleteBlogPost(id) {
+    const updatedPosts = blogPosts.filter((post) => post._id !== parseInt(id))
+    setBlogPosts(updatedPosts)
+  }
+
   function getNextId(){
     const ids = blogPosts.map((post) => post._id)
     return ids.sort()[ids.length - 1] + 1
@@ -42,7 +47,7 @@ const App = () => {
           <Route exact path="/posts/new" render={(props) => 
             <NewBlogPost {...props} addBlogPost={addBlogPost} nextId={getNextId()} />} />
           <Route exact path="/posts/:id" render={(props) => 
-            <BlogPost {...props} post={getPostFromId(props.match.params.id)} />} />
+            <BlogPost {...props} post={getPostFromId(props.match.params.id)} showControls deleteBlogPost={deleteBlogPost} />} />
             </Switch>
       </BrowserRouter>
     </div>
