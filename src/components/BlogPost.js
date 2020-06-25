@@ -8,11 +8,20 @@ const BlogPost = ({history, post, showControls, deleteBlogPost}) => {
         textDecoration: 'none',
         color: 'hotpink'
     }
+    const buttonStyles = {
+        margin: '.5em',
+        fontSize: '1em'
+    }
 
     const handleDelete = (e) => {
         e.preventDefault()
         deleteBlogPost(post._id)
         history.push('/')
+    }
+
+    const handleEdit = (e) => {
+        e.preventDefault()
+        history.push(`/posts/edit/${post._id}`)
     }
 
     const {title, modified_date, category, content} = post
@@ -25,7 +34,10 @@ const BlogPost = ({history, post, showControls, deleteBlogPost}) => {
                 <p>{category}</p>
                 <p>{content}</p>
                 {showControls && (
-                    <button onClick={handleDelete}>Delete</button>
+                    <div>
+                        <button onClick={handleEdit}>Edit</button>
+                        <button onClick={handleDelete}>Delete</button>
+                    </div>
                 )}
         </div>
     )

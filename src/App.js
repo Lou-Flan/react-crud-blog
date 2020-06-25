@@ -5,6 +5,7 @@ import BlogPosts from './components/BlogPosts'
 import BlogPost from './components/BlogPost'
 import Nav from './components/Nav'
 import NewBlogPost from './components/NewBlogPost'
+import EditBlogPost from './components/EditBlogPost'
 
 const App = () => {
   const [blogPosts, setBlogPosts] = useState([])
@@ -25,6 +26,11 @@ const App = () => {
   function deleteBlogPost(id) {
     const updatedPosts = blogPosts.filter((post) => post._id !== parseInt(id))
     setBlogPosts(updatedPosts)
+  }
+
+  function updateBlogPost(updatedPost) {
+    const otherPosts = blogPosts.filter((post) => post._id !== updatedPost._id)
+    setBlogPosts([...otherPosts, updatedPost])
   }
 
   function getNextId(){
@@ -48,6 +54,8 @@ const App = () => {
             <NewBlogPost {...props} addBlogPost={addBlogPost} nextId={getNextId()} />} />
           <Route exact path="/posts/:id" render={(props) => 
             <BlogPost {...props} post={getPostFromId(props.match.params.id)} showControls deleteBlogPost={deleteBlogPost} />} />
+            <Route exact path="/posts/edit/:id" render={(props) => <EditBlogPost {...props} updateBlogPost={updateBlogPost} post={getPostFromId(props.match.params.id)}/> }/>
+
             </Switch>
       </BrowserRouter>
     </div>
